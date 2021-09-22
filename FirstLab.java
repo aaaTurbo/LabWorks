@@ -1,12 +1,12 @@
 public class Main {
 
-    public static void randFillingArr(float[] arr){     //заполнение рандомом от -14.0 до 14.0
+    public static void randFillingArr(float[] arr, int min, int max){
         for (int i=0; i< arr.length; i++){
-            arr[i]=((float)(Math.random() *28) -14);
+            arr[i]=((float)(Math.random() *(2*max)) -min);
         }
     }
 
-    public static void fillingUsualArr(int[] arr){ //заполнения массива от 4 до 16 включительно
+    public static void fillingUsualArr(int[] arr){
         int a=4;
         for (int i=0; i< arr.length; i++){
             arr[i]=a;
@@ -14,9 +14,9 @@ public class Main {
         }
     }
 
-    public static void fillingDoubleArr(double[][] a, int x, int y, float[] c, int[] b){ //заполнение двумерного массива
-        for (int i=0; i<y; i++){
-            for (int j = 0; j<x; j++){
+    public static void fillingDoubleArr(double[][] a, float[] c, int[] b){
+        for (int i=0; i<7; i++){
+            for (int j = 0; j<14; j++){
                 if (b[i] == 12) a[i][j] = Math.cbrt(Math.asin(Math.sin(c[j])));
                 else if (b[i] == 6 | b[i] == 8 | b[i] == 10) a[i][j] = Math.pow((Math.log10(Math.pow(Math.sin(c[j]), 2))), (3/Math.sin(c[j]) * (Math.pow(c[j]/2,3))+4));
                 else a[i][j]=Math.cbrt(Math.sin(Math.cbrt(c[j]/2)));
@@ -24,10 +24,10 @@ public class Main {
         }
     }
 
-    public static void printDoubleArr(double[][] a, int x, int y){
-        for(int i=0; i<y; i++){
-            for (int j=0; j<x; j++){
-                System.out.printf("%.2f", a[i][j]);
+    public static void printDoubleArr(double[][] a){
+        for(int i=0; i<7; i++){
+            for (int j=0; j<14; j++){
+                System.out.printf("%5.2f", a[i][j]);
                 System.out.print(" ");
             }
             System.out.print('\n');
@@ -38,9 +38,9 @@ public class Main {
         int[] a=new int[7];
         float[] x=new float[14];
         fillingUsualArr(a);
-        randFillingArr(x);
+        randFillingArr(x, -14, 14);
         double[][] y=new double[7][14];
-        fillingDoubleArr(y, 14,7, x, a);
-        printDoubleArr(y, 14, 7);
+        fillingDoubleArr(y, x, a);
+        printDoubleArr(y);
     }
 }
