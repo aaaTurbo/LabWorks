@@ -1,0 +1,80 @@
+Gallade Pokemon из команды синих вступает в бой!
+Escavalier Pokemon из команды черных вступает в бой!
+Gallade Pokemon кастует Charm. 
+Escavalier Pokemon уменьшает атаку.
+
+Escavalier Pokemon кастует Twineedle. 
+Gallade Pokemon восстанавливает 1 здоровья.
+Gallade Pokemon восстанавливает 1 здоровья.
+
+Gallade Pokemon кастует Thunder Wave. 
+Escavalier Pokemon парализован
+
+Escavalier Pokemon кастует Double Team. 
+Escavalier Pokemon увеличивает уклоняемость.
+
+Escavalier Pokemon кастует X-Scissor. 
+Критический удар!
+Gallade Pokemon восстанавливает 1 здоровья.
+
+Gallade Pokemon кастует Double Team. 
+Gallade Pokemon увеличивает уклоняемость.
+
+Gallade Pokemon кастует Thunder Wave. 
+
+
+Escavalier Pokemon кастует Twineedle. 
+Критический удар!
+Gallade Pokemon восстанавливает 1 здоровья.
+Gallade Pokemon восстанавливает 1 здоровья.
+
+Gallade Pokemon кастует Focus Blast. 
+Критический удар!
+Escavalier Pokemon теряет 100 здоровья.
+Escavalier Pokemon теряет сознание.
+Kirilia Pokemon из команды черных вступает в бой!
+Gallade Pokemon кастует Focus Blast. 
+Kirilia Pokemon теряет 43 здоровья.
+
+Kirilia Pokemon кастует Thunder Wave. 
+Gallade Pokemon парализован
+
+Kirilia Pokemon кастует Thunder Wave. 
+
+
+Gallade Pokemon кастует Double Team. 
+Gallade Pokemon увеличивает уклоняемость.
+
+Kirilia Pokemon кастует Thunder Wave. 
+
+Gallade Pokemon кастует Charm. 
+Kirilia Pokemon уменьшает атаку.
+
+Kirilia Pokemon кастует Double Team. 
+Kirilia Pokemon увеличивает уклоняемость.
+
+Gallade Pokemon кастует Charm. 
+Kirilia Pokemon уменьшает атаку.
+
+Kirilia Pokemon кастует Double Team. 
+Kirilia Pokemon увеличивает уклоняемость.
+
+Gallade Pokemon кастует Focus Blast. 
+Критический удар!
+Kirilia Pokemon теряет 68 здоровья.
+Kirilia Pokemon теряет сознание.
+OricorioPomPom Pokemon из команды черных вступает в бой!
+Gallade Pokemon кастует Thunder Wave. 
+
+OricorioPomPom Pokemon кастует Swagger. 
+Gallade Pokemon теряет 28 здоровья.
+Gallade Pokemon теряет 28 здоровья.
+Gallade Pokemon теряет 28 здоровья.
+OricorioPomPom Pokemon увеличивает атаку.
+
+Gallade Pokemon кастует Focus Blast. 
+Критический удар!
+OricorioPomPom Pokemon теряет 79 здоровья.
+OricorioPomPom Pokemon теряет сознание.
+В команде черных не осталось покемонов.
+Команда синих побеждает в этом бою!
