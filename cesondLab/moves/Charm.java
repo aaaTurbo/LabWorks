@@ -1,20 +1,20 @@
 package moves;
 
-import ru.ifmo.se.pokemon.*;
+import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.Stat;
+import ru.ifmo.se.pokemon.StatusMove;
+import ru.ifmo.se.pokemon.Type;
 
 public class Charm extends StatusMove {
-
-    public Charm(){
-        super(Type.FAIRY, 0.0, 100.0);
+    public Charm() {
+        super(Type.FAIRY, 0.0D, 100.0D);
     }
 
-    @Override
     protected void applyOppEffects(Pokemon p) {
         p.setMod(Stat.ATTACK, -2);
     }
 
-    @Override
-    protected String describe(){
+    protected String describe() {
         return "кастует Charm";
     }
 }
