@@ -1,9 +1,17 @@
-import pokemons.*;
-import  ru.ifmo.se.pokemon.*;
+import pokemons.Escavalier;
+import pokemons.Gallade;
+import pokemons.Karrablast;
+import pokemons.Kirilia;
+import pokemons.OricorioPomPom;
+import pokemons.Ralts;
+import ru.ifmo.se.pokemon.Battle;
 
 public class Main {
+    public Main() {
+    }
 
-    static public void main(String[] args){
+    public static void main(String[] args) {
+        System.out.println(1);
         Ralts ralts = new Ralts("Pokemon", 10);
         Kirilia kirilia = new Kirilia("Pokemon", 20);
         Gallade gallade = new Gallade("Pokemon", 30);
