@@ -5,15 +5,15 @@ import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 
 public class XScissor extends PhysicalMove {
-    public XScissor(){super(Type.FIGHTING, 80.0, 100.0);}
+    public XScissor() {
+        super(Type.FIGHTING, 80.0D, 100.0D);
+    }
 
-    @Override
     protected void applyOppDamage(Pokemon p, double damage) {
         super.applyOppDamage(p, damage);
     }
 
-    @Override
-    protected String describe(){
+    protected String describe() {
         return "кастует X-Scissor";
     }
 }
