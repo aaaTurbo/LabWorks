@@ -1,30 +1,34 @@
 package moves;
 
-import ru.ifmo.se.pokemon.*;
+import ru.ifmo.se.pokemon.Effect;
+import ru.ifmo.se.pokemon.PhysicalMove;
+import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.Stat;
+import ru.ifmo.se.pokemon.Type;
 
 public class Swagger extends PhysicalMove {
-    public Swagger(){super(Type.NORMAL, 0.0, 85.00);}
+    public Swagger() {
+        super(Type.NORMAL, 0.0D, 85.0D);
+    }
 
-    @Override
     protected void applyOppEffects(Pokemon p) {
         Effect.confuse(p);
     }
 
-    @Override
     protected void applySelfEffects(Pokemon p) {
         p.setMod(Stat.ATTACK, 2);
     }
 
-    @Override
     protected void applyOppDamage(Pokemon p, double damage) {
-        int turn = ((int) (Math.random() * 4) + 1);
-        int attack = (int) p.getStat(Stat.ATTACK);
-        for (int i = 0; i < turn; i++) {
-            super.applyOppDamage(p, attack / turn);
+        int turn = (int)(Math.random() * 4.0D) + 1;
+        int attack = (int)p.getStat(Stat.ATTACK);
+
+        for(int i = 0; i < turn; ++i) {
+            super.applyOppDamage(p, (double)(attack / turn));
         }
+
     }
 
-    @Override
     protected String describe() {
         return "кастует Swagger";
     }
