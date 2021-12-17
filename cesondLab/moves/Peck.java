@@ -5,15 +5,15 @@ import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 
 public class Peck extends PhysicalMove {
-    public Peck(){super(Type.FIGHTING, 35.0, 100.0);}
+    public Peck() {
+        super(Type.FIGHTING, 35.0D, 100.0D);
+    }
 
-    @Override
     protected void applyOppDamage(Pokemon p, double damage) {
         super.applyOppDamage(p, damage);
     }
 
-    @Override
-    protected String describe(){
+    protected String describe() {
         return "кастует Peck";
     }
 }
