@@ -1,27 +1,28 @@
 package moves;
 
-import ru.ifmo.se.pokemon.*;
+import ru.ifmo.se.pokemon.Effect;
+import ru.ifmo.se.pokemon.PhysicalMove;
+import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.Type;
 
 public class Twineedle extends PhysicalMove {
     public Twineedle() {
-        super(Type.BUG, 25.0, 100.0);
+        super(Type.BUG, 25.0D, 100.0D);
     }
 
-    @Override
     protected void applyOppEffects(Pokemon p) {
-        int luck = ((int) (Math.random() * 10) + 0);
-        if ((luck == 1 || luck == 2) && (!p.hasType(Type.POISON) && (!p.hasType(Type.STEEL)))) {
+        int luck = (int)(Math.random() * 10.0D) + 0;
+        if ((luck == 1 || luck == 2) && !p.hasType(Type.POISON) && !p.hasType(Type.STEEL)) {
             Effect.poison(p);
         }
+
     }
 
-    @Override
     protected void applyOppDamage(Pokemon p, double damage) {
         super.applyOppDamage(p, damage);
         super.applyOppDamage(p, damage);
     }
 
-    @Override
     protected String describe() {
         return "кастует Twineedle";
     }
