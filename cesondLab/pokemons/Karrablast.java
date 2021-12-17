@@ -3,15 +3,16 @@ package pokemons;
 import moves.DoubleTeam;
 import moves.Peck;
 import moves.XScissor;
-import ru.ifmo.se.pokemon.*;
+import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.Type;
 
 public class Karrablast extends Pokemon {
-    public Karrablast(String name, int level){
+    public Karrablast(String name, int level) {
         super(name, level);
-        setStats(50.0, 75.0, 45.0, 40.0, 45.0, 60.0);
-        setType(Type.BUG);
-        addMove(new XScissor());
-        addMove(new DoubleTeam());
-        addMove(new Peck());
+        this.setStats(50.0D, 75.0D, 45.0D, 40.0D, 45.0D, 60.0D);
+        this.setType(new Type[]{Type.BUG});
+        this.addMove(new XScissor());
+        this.addMove(new DoubleTeam());
+        this.addMove(new Peck());
     }
 }
