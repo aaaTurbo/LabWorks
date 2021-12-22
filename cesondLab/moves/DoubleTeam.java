@@ -22,4 +22,3 @@ public class DoubleTeam extends StatusMove {
         return "кастует Double Team";
     }
 }
-}
