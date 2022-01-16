@@ -1,41 +1,41 @@
 public class Story {
     private String story = "Story Begins...\n\n";
 
-    public void  addHeroInStory(Object o){
-        if(o == (Hero)o) {
+    public void addHeroInStory(Object o) {
+        if (o == (Hero) o) {
             story += o.toString();
             story += "\n";
         }
     }
 
-    public void  addFeelingInStory(Hero hero, Feelings feeling){
+    public void addFeelingInStory(Hero hero, Feelings feeling) {
         story += hero.addFeeling(feeling);
         story += "\n";
     }
 
-    public void  dellFeelingInStory(Hero hero, Feelings feeling){
+    public void dellFeelingInStory(Hero hero, Feelings feeling) {
         story += hero.dellFeeling(feeling);
         story += "\n";
     }
 
-    public void  addSimpleMoveInStory(Hero hero, Moves move){
+    public void addSimpleMoveInStory(Hero hero, Moves move) {
         story += hero.doSimpleAction(move);
         story += "\n";
     }
 
-    public void  addMoveWithSmbInStory(Hero hero, Hero smb, Moves move){
+    public void addMoveWithSmbInStory(Hero hero, Hero smb, Moves move) {
         story += hero.doActionWithSmb(move, smb);
         story += "\n";
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return story;
     }
 
     @Override
-    public boolean equals(Object o){
-        if (this == o){
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
@@ -46,15 +46,15 @@ public class Story {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return story.hashCode();
     }
 
-    public void startStory(){
+    public void startStory() {
         System.out.println(this.toString());
     }
 
-    static public void main(String[] args){
+    static public void main(String[] args) {
         Story story = new Story();
         Hero ponchik = new Hero("Пончик", 1);
         story.addHeroInStory(ponchik);
