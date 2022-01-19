@@ -1,6 +1,8 @@
 package classes;
 
-public class Money {
+import interfaces.IsItem;
+
+public class Money implements IsItem {
     private String money;
     private String type;
 
@@ -29,5 +31,21 @@ public class Money {
         }
         Money m = (Money) o;
         return this.type == m.type;
+    }
+
+    @Override
+    public void addThisItem(Hero hero) {
+        hero.items[hero.numberOfItems] = this;
+        hero.numberOfItems++;
+    }
+
+    @Override
+    public void removeThisItem(Hero hero) {
+        for(int i=0; i < hero.numberOfItems; i++){
+            if (this.equals(hero.items[i])){
+                hero.items[i] = null;
+                break;
+            }
+        }
     }
 }
