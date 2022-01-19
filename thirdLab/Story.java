@@ -2,62 +2,32 @@ import classes.*;
 
 
 public class Story {
-    private String story = "Story Begins...\n\n";
-    private Trade trade = new Trade();
+    private int storyCode;
+    private String storyTeller;
+    private static Salt salt = new Salt();
+    private static Trade trade = new Trade();
+    private Hero[] heroes = new Hero[100];
+    private String storyName;
 
-    public void addHeroInStory(Object o) {
-        if (o == (Hero) o) {
-            story += o.toString();
-            story += "\n";
+    public Story(int storyCode, String storyTeller, String storyName){
+        this.storyCode = storyCode;
+        this.storyTeller = storyTeller;
+        this.storyName = storyName;
+    }
+
+    public void addHeroInStory(Hero hero) {
+        for (int i=0; i < heroes.length; i++){
+            if (heroes[i] == null){
+                heroes[i] = hero;
+                System.out.println("Герой " + hero.getName() + " присоединился к истории");
+                break;
+            }
         }
-    }
-
-    public void addFeelingInStory(Hero hero, Feelings feeling) {
-        story += hero.addFeeling(feeling);
-        story += "\n";
-    }
-
-    public void dellFeelingInStory(Hero hero, Feelings feeling) {
-        story += hero.dellFeeling(feeling);
-        story += "\n";
-    }
-
-    public void addMoveInStory(Hero hero, Move move, int repeats) {
-        story += hero.doAction(move, repeats);
-        story += "\n";
-    }
-
-    public void addTradeInStory(Hero f, Hero s, Object gv, int numgv, Object gt, int numgt) {
-        story += trade.commitTrade(f, s, gv, numgv, gt, numgt);
-        story += "\n";
-    }
-
-    public void addTasteMove(Hero hero, Object o) {
-        if (o.getClass() == Food.class) {
-            Food f = (Food) o;
-            story += f.taste(hero);
-            story += "\n";
-        }
-        if (o.getClass() == Salt.class) {
-            Salt s = (Salt) o;
-            story += s.taste(hero);
-            story += "\n";
-        }
-        if (o.getClass() != Salt.class && o.getClass() != Food.class) {
-            story += "Объект нельзя попробовать";
-            story += "\n";
-        }
-    }
-
-    public void addAddSaltMove(Hero hero, int times, Food food) {
-        story += food.AddSalt(hero, times);
-        story += "\n";
     }
 
     @Override
     public String toString() {
-        story += "\n\nThe end of the Stoty...";
-        return story;
+        return "История " + storyName + ";\nрассказчик: " + storyTeller + "\n";
     }
 
     @Override
@@ -69,53 +39,54 @@ public class Story {
             return false;
         }
         Story st = (Story) o;
-        return this.story == st.story;
+        return (storyTeller == st.storyTeller && storyName == st.storyName);
     }
 
     @Override
     public int hashCode() {
-        return story.hashCode();
-    }
-
-    public void startStory() {
-        System.out.println(this.toString());
+        return storyCode;
     }
 
     static public void main(String[] args) {
-        Trade trade = new Trade();
-        Story story = new Story();
-        Salt salt = new Salt();
+        Story story = new Story(1, "Семенов Антон", "Коротышки");
+        Location location = new Location("Где - то", "Город Коротышек");
         Money santik = new Money("Сантик", "coin");
         Hero ponchik = new Hero("Пончик", 1);
         story.addHeroInStory(ponchik);
-        story.addFeelingInStory(ponchik, Feelings.ENVY);
-        Move handtopocket = new Move("потянуться рукой в карман");
-        story.addMoveInStory(ponchik, handtopocket, 1);
-        Move takesatk = new Move("взять " + salt.toString());
-        story.addMoveInStory(ponchik, takesatk, 1);
-        story.addFeelingInStory(ponchik, Feelings.GREEDY);
+        for (int i = 0; i < 20; i++){
+            salt.addThisItem(ponchik);
+        }
+        ponchik.addFeeling(Feelings.ENVY);;
+        ponchik.takeItem(salt);
+        ponchik.addFeeling(Feelings.GREEDY);
         Hero korotysh = new Hero("Коротышка", 2);
         story.addHeroInStory(korotysh);
-        story.addTradeInStory(korotysh, ponchik, santik, 1, salt, 1);
+        santik.addThisItem(korotysh);
+        trade.commitTrade(korotysh, ponchik, santik, salt);
         Hero others = new Hero("Другие посетители", 3);
         story.addHeroInStory(others);
-        Move startToCome = new Move("начали подходить");
-        story.addMoveInStory(others, startToCome, 1);
+        others.setLocation(location);
+        others.changeLocation("У Пончика");
         Hero errybody = new Hero("Каждый", 4);
-        story.addTradeInStory(errybody, ponchik, santik, 1, salt, 1);
-        story.addFeelingInStory(ponchik, Feelings.PLEASURE);
-        Move seeSantikGrow = new Move("смотрит как стопка " + santik.toString() + " растет");
-        story.addMoveInStory(ponchik, seeSantikGrow, 1);
+        santik.addThisItem(errybody);
+        trade.commitTrade(errybody, ponchik, santik, salt);
+        ponchik.addFeeling(Feelings.PLEASURE);
         Hero luntik = new Hero("Лунатик", 5);
         story.addHeroInStory(luntik);
-        story.addTasteMove(luntik, salt);
-        story.addFeelingInStory(luntik, Feelings.DISGUST);
+        salt.taste(luntik);
         Hero another = new Hero("Другой", 6);
         story.addHeroInStory(another);
-        story.addTradeInStory(another, ponchik, santik, 10, salt, 10);
+        for (int i = 0; i < 10; i++){
+            santik.addThisItem(another);
+        }
+        for (int i = 0; i < 10; i++){
+            trade.commitTrade(another, ponchik, santik, salt);
+        }
         Food soup = new Food("Суп");
-        story.addAddSaltMove(another, 10, soup);
-        story.addTasteMove(another, soup);
-        story.startStory();
+        soup.addThisItem(another);
+        for (int i = 0; i < 10; i++){
+            soup.addSalt(another);
+        }
+        soup.taste(another);
     }
 }
