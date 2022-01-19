@@ -1,8 +1,9 @@
 package classes;
 
+import interfaces.IsItem;
 import interfaces.Tasteable;
 
-public class Food implements Tasteable {
+public class Food implements Tasteable, IsItem {
     private String food;
     private int levelOfSalt = 0;
 
@@ -11,24 +12,57 @@ public class Food implements Tasteable {
     }
 
     @Override
-    public String taste(Hero hero) {
-        if (levelOfSalt == 0) {
-            return "Герой " + hero.getName() + " пробует Еду " + food + " и говорит что она не соленая";
-        }
-        if (levelOfSalt == 1 || levelOfSalt == 2) {
-            return "Герой " + hero.getName() + " пробует Еду " + food + " и говорит что соли в самый раз";
-        }
-        if (levelOfSalt > 2) {
-            return "Герой " + hero.getName() + " пробует Еду " + food + " и выплевывет, говоря что она пересолена";
-        }
-        return "error";
+    public void addThisItem(Hero hero) {
+        hero.items[hero.numberOfItems] = this;
+        hero.numberOfItems++;
     }
 
-    public String AddSalt(Hero hero, int times) {
-        for (int i = 0; i < times; i++) {
-            levelOfSalt++;
+    @Override
+    public void removeThisItem(Hero hero) {
+        for(int i=0; i < hero.numberOfItems; i++){
+            if (this.equals(hero.items[i])){
+                hero.items[i] = null;
+                break;
+            }
         }
-        return "Герой " + hero.getName() + " солит Еду " + food + " " + times + "раз";
+    }
+
+    @Override
+    public void taste(Hero hero) {
+        if (levelOfSalt == 0) {
+            System.out.println("Герой " + hero.getName() + " пробует Еду " + food + " и говорит что она не соленая");
+            hero.addFeeling(Feelings.DISGUST);
+            hero.dellFeeling(Feelings.DISGUST);
+        }
+        if (levelOfSalt == 1 || levelOfSalt == 2) {
+            System.out.println("Герой " + hero.getName() + " пробует Еду " + food + " и говорит что соли в самый раз");
+            hero.addFeeling(Feelings.PLEASURE);
+            hero.dellFeeling(Feelings.PLEASURE);
+        }
+        if (levelOfSalt > 2) {
+            System.out.println("Герой " + hero.getName() + " пробует Еду " + food + " и выплевывет, говоря что она пересолена");
+            hero.addFeeling(Feelings.DISGUST);
+            hero.dellFeeling(Feelings.DISGUST);
+        }
+    }
+
+    public void addSalt(Hero hero) {
+        boolean haveSalt = false;
+        for (int i = 0; i < hero.numberOfItems; i++) {
+            Salt salt = new Salt();
+            if (salt.equals(hero.numberOfItems)){
+                haveSalt = true;
+                salt.removeThisItem(hero);
+                levelOfSalt++;
+                break;
+            }
+        }
+        if (haveSalt == false){
+            System.out.println("У коротышки нет соли");
+        }
+        if (haveSalt == true){
+            System.out.println("Герой " + hero.getName() + " солит " + this);
+        }
     }
 
     @Override
