@@ -1,5 +1,7 @@
 package classes;
 
+import interfaces.IsItem;
+
 public class Hero extends Human {
 
     public Hero(String name, int dnacode) {
@@ -7,22 +9,68 @@ public class Hero extends Human {
     }
 
     @Override
-    public String doAction(Move move, int repeatTimes) {
-        return "Герой " + this.getName() + " совершает" + move.toString() + " " + repeatTimes + " раз";
+    public void takeItem(IsItem item) {
+        for (int i = 0; i < feelings.length; i++) {
+            if (items[i] == item && inHand == null) {
+                IsItem itemRem = (IsItem) items[i];
+                itemRem.removeThisItem(this);
+                System.out.println("Герой " + this.getName() + " взял " + item);
+                break;
+            } else System.out.println("Герой " + this.getName() + " не имеет " + item.toString());
+        }
     }
 
     @Override
-    public String addFeeling(Feelings feel) {
-        return "Герой " + this.getName() + " начал чувствовать " + feel.toString();
+    public void putItem(IsItem item) {
+        if (inHand == item) {
+            item.addThisItem(this);
+            System.out.println("Герой " + this.getName() + " положил " + item);
+        }
+        System.out.println("У Героя " + this.getName() + " нет ничего в руке");
     }
 
     @Override
-    public String dellFeeling(Feelings feel) {
-        return "Герой " + this.getName() + " перествал чувствовать " + feel.toString();
+    public void changeLocation(String newLocation) {
+        location.changeLocation(newLocation);
+        System.out.println("Герой " + this.getName() + " поменял свою локацию на " + location.toString());
     }
 
-    public String Taste(Food food) {
-        return food.taste(this);
+    @Override
+    public void changeCity(String newLocation, String newCity) {
+        location.changeCity(newCity, newLocation);
+        System.out.println("Герой " + this.getName() + " поменял свою локацию на " + location.toString());
+    }
+
+    @Override
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+
+    @Override
+    public void addFeeling(Feelings feel) {
+        for (int i = 0; i < feelings.length; i++) {
+            if (feelings[i] == null) {
+                feelings[i] = feel;
+                System.out.println("Герой " + this.getName() + " начал чувствовать " + feel.toString());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void dellFeeling(Feelings feel) {
+        for (int i = 0; i < feelings.length; i++) {
+            if (feelings[i] == feel) {
+                feelings[i] = null;
+                System.out.println("Герой " + this.getName() + " перестал чувствовать " + feel.toString());
+                break;
+            }
+        }
+    }
+
+    public void Taste(Food food) {
+        food.taste(this);
     }
 
     @Override
@@ -34,7 +82,7 @@ public class Hero extends Human {
             return false;
         }
         Hero hero = (Hero) o;
-        return this.dnacode == hero.dnacode;
+        return (this.dnacode == hero.dnacode && this.feelings == hero.feelings && this.items == hero.items && this.location == hero.location && this.inHand == hero.inHand && this.getName() == hero.getName());
     }
 
     @Override
