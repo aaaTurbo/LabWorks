@@ -1,11 +1,28 @@
 package classes;
 
+import interfaces.IsItem;
 import interfaces.Tasteable;
 
-public class Salt implements Tasteable {
+public class Salt implements Tasteable, IsItem {
     final private String salt = "щепоть соли";
 
     public Salt() {
+    }
+
+    @Override
+    public void addThisItem(Hero hero) {
+        hero.items[hero.numberOfItems] = this;
+        hero.numberOfItems++;
+    }
+
+    @Override
+    public void removeThisItem(Hero hero) {
+        for(int i=0; i < hero.numberOfItems; i++){
+            if (this.equals(hero.items[i])){
+                hero.items[i] = null;
+                break;
+            }
+        }
     }
 
     @Override
@@ -24,7 +41,9 @@ public class Salt implements Tasteable {
     }
 
     @Override
-    public String taste(Hero hero) {
-        return "Герой " + hero.getName() + " пробует и выплевывает соль";
+    public void taste(Hero hero) {
+        System.out.println("Герой " + hero.getName() + " пробует и выплевывает соль");
+        hero.addFeeling(Feelings.DISGUST);
+        hero.dellFeeling(Feelings.DISGUST);
     }
 }
