@@ -11,6 +11,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.Vector;
 
 /*
 Класс, реализающий чтение и выполнение скриптов
@@ -71,15 +72,30 @@ public class ScriptListener {
         BufferedReader reader = new BufferedReader(new InputStreamReader(read));
         CSVReader csvReader = new CSVReader(reader, ',', '"', 0);
         String[] nextLine;
+        Vector<String> executedScripts = new Vector<>();
+        executedScripts.add(file.getName());
         while ((nextLine = csvReader.readNext()) != null) {
             try {
                 String name = splitName(nextLine[0]);
                 String[] args = splitArgs(nextLine[0]);
+                if ("execute_script".equals(name)) {
+                    int size = executedScripts.size();
+                    for (int i = 0; i < size; i++) {
+                        if (executedScripts.get(i).equals(args[0])) {
+                            throw new Exception("Такой скрипт уже выполнялся!");
+                        } else {
+                            executedScripts.add(args[0]);
+                        }
+                    }
+                }
                 Command command = commandSelecter.selectCommand(name);
                 if (command == null) {
                     throw new WrongInputException();
                 }
                 command.execute(args);
+                if ("execute_script".equals(name)) {
+                    executedScripts.remove(executedScripts.lastElement());
+                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

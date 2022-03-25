@@ -3,3 +3,5 @@
 "add perviy 34 34 34 34 test 34 34 test 34",
 "add vtoroy 323 34 34 34 test 34 34 test 34",
 "show",
+"execute_script script1.csv",
+"execute_script script1.csv",

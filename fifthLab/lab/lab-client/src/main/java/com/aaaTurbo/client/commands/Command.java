@@ -491,7 +491,7 @@ public abstract class Command {
             if (foundFiles.size() > 1) {
                 System.out.println("Введите номер коллекции, которую хотите восстановить(нумерация от 1): ");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int read = Integer.valueOf(reader.readLine());
+                int read = Integer.parseInt(reader.readLine());
                 foundFileToLoad = foundFiles.get(read - 1);
                 add(foundFileToLoad);
             }
@@ -620,6 +620,7 @@ public abstract class Command {
             ScriptListener scriptListener = new ScriptListener(routeCollection);
             scriptListener.setFile(foundFile);
             scriptListener.listenScript();
+            foundFiles.removeAllElements();
         }
 
         @Override
