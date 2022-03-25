@@ -9,6 +9,9 @@ public final class Client {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
     }
 
+    /*
+    Метод, реализующий настройку клиента для работы программы
+    */
     private static void clientSetUP() throws Exception {
         RouteCollection mainCollection = new RouteCollection();
         Command loader = new Command.LoadFromFile();

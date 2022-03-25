@@ -1,7 +1,11 @@
 package com.aaaTurbo.client.classes;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
+/*
+Класс объекы которого, хранятся в коллекции
+*/
 public class Route implements Comparable<Route> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -61,6 +65,10 @@ public class Route implements Comparable<Route> {
         return id;
     }
 
+    /*
+    Метод, который генерирует данные для сохранения элементов коллекции в файл
+    @return String[]
+    */
     public String[] generateToSaveInCSV() {
         String[] csv = (id + "," + name + "," + coordinates.getX() + "," + coordinates.getY() + "," + creationDate.toString() + "," + from.getX() + "," + from.getY() + "," + from.getName() + "," + to.getX() + "," + to.getY() + "," + to.getName() + "," + distance).split(",");
         return csv;
@@ -75,8 +83,13 @@ public class Route implements Comparable<Route> {
     }
 
     @Override
-    public int hashCode() {
-        return id;
+    public String toString() {
+        return "Дорога " + id;
+    }
+
+    @Override
+    public int compareTo(Route o) {
+        return name.compareTo(o.name) + id - o.id;
     }
 
     @Override
@@ -87,17 +100,12 @@ public class Route implements Comparable<Route> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Route l = (Route) o;
-        return name == l.name && coordinates == l.coordinates && creationDate == l.creationDate && from == l.from && to == l.to && distance == l.distance;
+        Route route = (Route) o;
+        return id == route.id && name.equals(route.name) && coordinates.equals(route.coordinates) && creationDate.equals(route.creationDate) && from.equals(route.from) && to.equals(route.to) && distance.equals(route.distance);
     }
 
     @Override
-    public String toString() {
-        return "Дорога " + id;
-    }
-
-    @Override
-    public int compareTo(Route o) {
-        return name.compareTo(o.name) + id - o.id;
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

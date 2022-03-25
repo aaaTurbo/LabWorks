@@ -6,6 +6,7 @@ import com.aaaTurbo.client.myExceptions.WrongInputException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CommandListener {
@@ -101,5 +102,22 @@ public class CommandListener {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CommandListener that = (CommandListener) o;
+        return inWork == that.inWork && historyCounter == that.historyCounter && historyLength == that.historyLength && reader.equals(that.reader) && utilCommandForSetUp.equals(that.utilCommandForSetUp) && commandSelecter.equals(that.commandSelecter) && Arrays.equals(historyAttendant, that.historyAttendant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(historyCounter, historyLength);
     }
 }

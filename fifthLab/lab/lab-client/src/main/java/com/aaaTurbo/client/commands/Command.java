@@ -23,18 +23,34 @@ import java.nio.file.NoSuchFileException;
 import java.util.Objects;
 import java.util.Vector;
 
+/*
+Класс, описывающий и реализующий все команды в программе
+ */
 public abstract class Command {
     private static RouteCollection routeCollection;
 
     public Command() {
     }
 
+    /*
+    Геттер описания команды
+    */
     public abstract String getDescription();
 
+    /*
+    Метод, реализующий выполнение команды
+    @param String[] args
+     */
     public abstract void execute(String[] args) throws Exception;
 
+    /*
+    Геттер названия команды
+     */
     public abstract String getName();
 
+    /*
+    Служебная комманда реализующая первичную настройку всех команд для работы с коллекцией
+     */
     public static class UtilCommandForSetUp extends Command {
         private String name;
 
@@ -44,6 +60,10 @@ public abstract class Command {
             name = "setuputility";
         }
 
+        /*
+        Метод настраивает команды под работу с коллекцией
+        @return Vector<Command>
+         */
         public static Vector<Command> formCommandList() {
             Help help = new Help();
             Info info = new Info();
@@ -86,12 +106,35 @@ public abstract class Command {
             return null;
         }
 
+        /*
+        За выполнение этой комманды отвечает
+         */
         @Override
         public void execute(String[] args) throws Exception {
             System.out.println("За выполнение отвечают другие методы... :/");
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            UtilCommandForSetUp that = (UtilCommandForSetUp) o;
+            return Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда выводит список всех остальных команд с описанием
+     */
     public static class Help extends Command {
         private String name = "help";
         private String description = "вывести справку по доступным командам";
@@ -116,8 +159,27 @@ public abstract class Command {
             }
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Help help = (Help) o;
+            return name.equals(help.name) && description.equals(help.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда выводит информацию о коллекции
+     */
     public static class Info extends Command {
         private String name = "info";
         private String description = "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)";
@@ -137,8 +199,28 @@ public abstract class Command {
             }
             System.out.println(routeCollection.toString());
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Info info = (Info) o;
+            return name.equals(info.name) && description.equals(info.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда выводит все элементы коллекции
+     */
     public static class Show extends Command {
         private String name = "show";
         private String description = "в стандартный поток вывода элементы коллекции в строковом представлении";
@@ -158,8 +240,28 @@ public abstract class Command {
             }
             System.out.println(routeCollection.getRoadCollection());
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Show show = (Show) o;
+            return name.equals(show.name) && description.equals(show.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда добавляет элемень в коллекцию
+     */
     public static class Add extends Command {
         private String name = "add";
         private String description = "{name, x(Coordinates), y(Coordinates), x(LocationFrom), y(LocationFrom), name(LocationFrom), x(LocationTo), y(LocationTo), name(LocationTo), distance} : добавить новый элемент в коллекцию";
@@ -186,8 +288,28 @@ public abstract class Command {
                 System.out.println(e.getMessage());
             }
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Add command = (Add) o;
+            return name.equals(command.name) && description.equals(command.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда обновляет объект в коллекции по его id
+     */
     public static class Update extends Command {
         private String name = "update";
         private String description = "id {name, x(Coordinates), y(Coordinates), x(LocationFrom), y(LocationFrom), name(LocationFrom), x(LocationTo), y(LocationTo), name(LocationTo), distance} : обновить значение элемента коллекции, id которого равен заданному";
@@ -213,8 +335,28 @@ public abstract class Command {
                 throw new WrongInputException();
             }
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Update update = (Update) o;
+            return name.equals(update.name) && description.equals(update.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда удаляет объект из коллекции по его id
+     */
     public static class RemoveById extends Command {
         private String name = "remove_by_id";
         private String description = "удалить элемент из коллекции по его id";
@@ -237,8 +379,28 @@ public abstract class Command {
                 throw new WrongInputException();
             }
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            RemoveById that = (RemoveById) o;
+            return name.equals(that.name) && description.equals(that.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда полностью очищает коллекцию
+     */
     public static class Clear extends Command {
         private String name = "clear";
         private String description = "очистить коллекцию";
@@ -255,8 +417,28 @@ public abstract class Command {
         public void execute(String[] args) throws Exception {
             routeCollection.getRoadCollection().clear();
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Clear clear = (Clear) o;
+            return name.equals(clear.name) && description.equals(clear.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Служебная команда для восстановления коллекции из сохраненного файла, если такой имеется
+     */
     public static class LoadFromFile extends Command {
         private RouteCollection routeCollection;
         private String name = "загркзка из файла";
@@ -267,10 +449,18 @@ public abstract class Command {
             return null;
         }
 
+        /*
+        метод устанавливает коллекцию для корректной работы команды
+        @param RouteCollection
+        */
         public void setRouteCollection(RouteCollection routeCollection) {
             this.routeCollection = routeCollection;
         }
 
+        /*
+        Метод реализует добавление восстановленных элементов в коллекцию
+        @param File
+        */
         private void add(File foundFileToLoad) throws Exception {
             BufferedInputStream read = new BufferedInputStream(new FileInputStream(foundFileToLoad));
             BufferedReader reader = new BufferedReader(new InputStreamReader(read));
@@ -315,8 +505,28 @@ public abstract class Command {
         public String getName() {
             return null;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            LoadFromFile that = (LoadFromFile) o;
+            return routeCollection.equals(that.routeCollection) && name.equals(that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда сохраняет коллекцию в файл
+     */
     public static class Save extends Command {
         private String name = "save";
         private String description = "сохранить коллекцию в файл";
@@ -350,8 +560,28 @@ public abstract class Command {
         public String getName() {
             return name;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Save save = (Save) o;
+            return name.equals(save.name) && description.equals(save.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда выполняет скрипт из указанного файла
+     */
     public static class ExecuteScript extends Command {
         private String name = "execute_script";
         private String description = "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.";
@@ -396,8 +626,28 @@ public abstract class Command {
         public String getName() {
             return name;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            ExecuteScript that = (ExecuteScript) o;
+            return name.equals(that.name) && description.equals(that.description) && foundFiles.equals(that.foundFiles) && foundFile.equals(that.foundFile);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда добавляет элемент в коллекцию, если он минимальный по значению
+     */
     public static class AddIfMin extends Command {
         private String name = "add_if_min";
         private String description = "{name, x(Coordinates), y(Coordinates), x(LocationFrom), y(LocationFrom), name(LocationFrom), x(LocationTo), y(LocationTo), name(LocationTo), distance} : добавить новый элемент в коллекцию, если его значение меньше, чем у наименьшего элемента этой коллекции";
@@ -426,14 +676,51 @@ public abstract class Command {
                 System.out.println(e.getMessage());
             }
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            AddIfMin addIfMin = (AddIfMin) o;
+            return name.equals(addIfMin.name) && description.equals(addIfMin.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда удаляет все большие по значению элементы коллекции
+     */
     public static class RemoveGreater extends Command {
         private String name = "remove_greater";
         private String description = "{name, x(Coordinates), y(Coordinates), x(LocationFrom), y(LocationFrom), name(LocationFrom), x(LocationTo), y(LocationTo), name(LocationTo), distance} : удалить из коллекции все элементы, превышающие заданный";
 
         public String getDescription() {
             return description;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            RemoveGreater that = (RemoveGreater) o;
+            return name.equals(that.name) && description.equals(that.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
         }
 
         @Override
@@ -453,6 +740,7 @@ public abstract class Command {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+
         }
 
         @Override
@@ -461,6 +749,9 @@ public abstract class Command {
         }
     }
 
+    /*
+    Комманда фильтр, выводит элемент с максимальным значением по имени
+     */
     public static class MaxByName extends Command {
         private String name = "max_by_name";
         private String description = "вывести любой объект из коллекции, значение поля name которого является максимальным";
@@ -478,9 +769,28 @@ public abstract class Command {
         public String getName() {
             return name;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            MaxByName maxByName = (MaxByName) o;
+            return name.equals(maxByName.name) && description.equals(maxByName.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
-
+    /*
+     Комманда фильтр, выводит все элементы, дистанция которых равна введенной
+     */
     public static class FilterByDistance extends Command {
         private String name = "filter_by_distance";
         private String description = "вывести элементы, значение поля distance которых равно заданному";
@@ -503,8 +813,28 @@ public abstract class Command {
             }
             System.out.println(routeCollection.distanceFilter(Long.parseLong(args[0])));
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            FilterByDistance that = (FilterByDistance) o;
+            return name.equals(that.name) && description.equals(that.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
+    /*
+    Комманда выводит все элементы, дистанция которых меньше введенной
+     */
     public static class FilterLessThenDistance extends Command {
         private String name = "filter_less_then_distance";
         private String description = "вывести элементы, значение поля distance которых меньше заданного";
@@ -526,6 +856,23 @@ public abstract class Command {
                 throw new NoRouteInCollectionException();
             }
             System.out.println(routeCollection.distanceLessFilter(Long.parseLong(args[0])));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            FilterLessThenDistance that = (FilterLessThenDistance) o;
+            return name.equals(that.name) && description.equals(that.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
         }
     }
 }

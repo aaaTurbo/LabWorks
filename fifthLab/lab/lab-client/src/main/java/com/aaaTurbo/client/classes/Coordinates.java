@@ -1,5 +1,10 @@
 package com.aaaTurbo.client.classes;
 
+import java.util.Objects;
+
+/*
+Класс координат, который используются для сосздания route
+*/
 public class Coordinates {
     private Long x; //Поле не может быть null
     private int y;
@@ -21,8 +26,8 @@ public class Coordinates {
     }
 
     @Override
-    public int hashCode() {
-        return (int) (x + y);
+    public String toString() {
+        return "Координаты " + x + " ; " + y;
     }
 
     @Override
@@ -33,12 +38,12 @@ public class Coordinates {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Coordinates l = (Coordinates) o;
-        return x == l.x && y == l.y;
+        Coordinates that = (Coordinates) o;
+        return y == that.y && x.equals(that.x);
     }
 
     @Override
-    public String toString() {
-        return "Координаты " + x + " ; " + y;
+    public int hashCode() {
+        return Objects.hash(y);
     }
 }

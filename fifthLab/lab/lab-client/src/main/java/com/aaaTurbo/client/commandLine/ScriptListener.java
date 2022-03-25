@@ -10,7 +10,11 @@ import java.io.BufferedReader;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
+/*
+Класс, реализающий чтение и выполнение скриптов
+*/
 public class ScriptListener {
     private File file;
     private Command.UtilCommandForSetUp utilCommandForSetUp;
@@ -21,10 +25,19 @@ public class ScriptListener {
         commandSelecter = new CommandSelecter(utilCommandForSetUp);
     }
 
+    /*
+    Метод, устанавливающий файл
+    @param File
+    */
     public void setFile(File file) {
         this.file = file;
     }
 
+    /*
+    Метод, выделяющий имя из параметров командной строки
+    @param Str
+    @return String
+    */
     private String splitName(String str) {
         String[] s = str.split(" ");
         String splitedName = s[0];
@@ -32,6 +45,11 @@ public class ScriptListener {
         return splitedName;
     }
 
+    /*
+    Метод, выделяющий аргументы из параметров командной строки
+    @param Str[]
+    @return String
+    */
     private String[] splitArgs(String str) {
         String[] splited = str.split(" ");
         String[] args = new String[splited.length - 1];
@@ -45,6 +63,9 @@ public class ScriptListener {
         return args;
     }
 
+    /*
+    Метод, реализующий парсинг и выполнения скрипт
+    */
     public void listenScript() throws Exception {
         BufferedInputStream read = new BufferedInputStream(new FileInputStream(file));
         BufferedReader reader = new BufferedReader(new InputStreamReader(read));
@@ -64,5 +85,22 @@ public class ScriptListener {
             }
         }
         System.out.println("---Скрипт выполнен!---");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ScriptListener that = (ScriptListener) o;
+        return file.equals(that.file) && utilCommandForSetUp.equals(that.utilCommandForSetUp) && commandSelecter.equals(that.commandSelecter);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file);
     }
 }

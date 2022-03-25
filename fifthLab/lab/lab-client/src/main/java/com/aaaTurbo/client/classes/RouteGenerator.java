@@ -1,6 +1,7 @@
 package com.aaaTurbo.client.classes;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 public class RouteGenerator {
     private String generatorName = "Генератор дорог";
@@ -57,5 +58,22 @@ public class RouteGenerator {
         LocationOne locO = generateLocationOne(args[++index], args[++index], args[++index]);
         Long dist = Long.valueOf(args[++index]);
         return new Route(id, name, cords, creationDate, loc, locO, dist);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RouteGenerator that = (RouteGenerator) o;
+        return Objects.equals(generatorName, that.generatorName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(generatorName);
     }
 }

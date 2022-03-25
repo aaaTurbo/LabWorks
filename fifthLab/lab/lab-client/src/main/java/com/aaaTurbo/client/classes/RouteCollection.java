@@ -7,11 +7,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Vector;
 
+/*
+Класс, реализующий коллекцию дорог
+*/
 public class RouteCollection {
     private HashSet<Route> roadCollection = new HashSet<>();
     private java.time.ZonedDateTime creationDate;
+    private final int rand = 2147483647;
+    private int ident = (int) (Math.random() * rand);
 
     public RouteCollection() {
         this.creationDate = ZonedDateTime.now();
@@ -21,6 +27,10 @@ public class RouteCollection {
         return roadCollection;
     }
 
+    /*
+    Метод, выолняющий поиск в коллекци по полю id объекта
+    @return Route
+    */
     public Route idSearch(int id) throws IOException {
         Vector<Route> routes = new Vector<>();
         for (Route r : roadCollection) {
@@ -41,6 +51,10 @@ public class RouteCollection {
         }
     }
 
+    /*
+    Метод, выполняющий поиск по distance
+    @return Vector<Route>
+    */
     public Vector<Route> distanceFilter(long dist) {
         Vector<Route> foundRoutes = new Vector<>();
         for (Route r : roadCollection) {
@@ -51,6 +65,10 @@ public class RouteCollection {
         return foundRoutes;
     }
 
+    /*
+    Метод, выполняющий поиск по distance меньших элементов
+    @return Vector<Route>
+    */
     public Vector<Route> distanceLessFilter(long dist) {
         Vector<Route> foundRoutes = new Vector<>();
         for (Route r : roadCollection) {
@@ -61,6 +79,10 @@ public class RouteCollection {
         return foundRoutes;
     }
 
+    /*
+    Метод, выполняющий поиск по минимального элемента по значению
+    @return Route
+    */
     public Route findMin() {
         final int id = 2147483647;
         Route min = new Route("Я", id);
@@ -72,6 +94,10 @@ public class RouteCollection {
         return min;
     }
 
+    /*
+    Метод, выполняющий поиск по значеню имени
+    @return Route
+    */
     public Route nameValueFilter() throws NoRouteInCollectionException {
         if (roadCollection.size() == 0) {
             throw new NoRouteInCollectionException();
@@ -88,5 +114,22 @@ public class RouteCollection {
     @Override
     public String toString() {
         return "Коллекция дорог типа HashSet.\nДата создания: " + creationDate.toString() + "\nКоличество элементов: " + roadCollection.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RouteCollection that = (RouteCollection) o;
+        return rand == that.rand && ident == that.ident && roadCollection.equals(that.roadCollection) && creationDate.equals(that.creationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ident);
     }
 }
