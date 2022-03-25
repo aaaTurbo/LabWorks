@@ -17,9 +17,11 @@ import java.util.Vector;
 Класс, реализающий чтение и выполнение скриптов
 */
 public class ScriptListener {
+    private static Vector<String> executedScripts = new Vector<>();
     private File file;
     private Command.UtilCommandForSetUp utilCommandForSetUp;
     private CommandSelecter commandSelecter;
+
 
     public ScriptListener(RouteCollection routeCollection) {
         utilCommandForSetUp = new Command.UtilCommandForSetUp(routeCollection);
@@ -72,7 +74,6 @@ public class ScriptListener {
         BufferedReader reader = new BufferedReader(new InputStreamReader(read));
         CSVReader csvReader = new CSVReader(reader, ',', '"', 0);
         String[] nextLine;
-        Vector<String> executedScripts = new Vector<>();
         executedScripts.add(file.getName());
         while ((nextLine = csvReader.readNext()) != null) {
             try {
@@ -94,6 +95,7 @@ public class ScriptListener {
                 }
                 command.execute(args);
                 if ("execute_script".equals(name)) {
+                    executedScripts.remove(executedScripts.lastElement());
                     executedScripts.remove(executedScripts.lastElement());
                 }
             } catch (Exception e) {

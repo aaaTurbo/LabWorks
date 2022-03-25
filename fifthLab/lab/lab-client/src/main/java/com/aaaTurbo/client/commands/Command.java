@@ -620,7 +620,7 @@ public abstract class Command {
             ScriptListener scriptListener = new ScriptListener(routeCollection);
             scriptListener.setFile(foundFile);
             scriptListener.listenScript();
-            foundFiles.removeAllElements();
+            foundFiles.remove(foundFiles.lastElement());
         }
 
         @Override

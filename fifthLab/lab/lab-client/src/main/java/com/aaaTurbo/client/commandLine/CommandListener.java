@@ -7,6 +7,7 @@ import com.aaaTurbo.client.myExceptions.WrongInputException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class CommandListener {
@@ -74,6 +75,9 @@ public class CommandListener {
             while (inWork) {
                 System.out.print("Введите команду: ");
                 String read = reader.readLine();
+                if (read == null) {
+                    throw new NoSuchElementException("Некорректный ввод! Остановка программы...");
+                }
                 if (Objects.equals(read, "history")) {
                     System.out.println("(нижняя команда - последняя введенная)");
                     for (String s : history) {
