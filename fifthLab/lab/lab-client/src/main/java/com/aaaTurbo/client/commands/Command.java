@@ -23,8 +23,8 @@ import java.nio.file.NoSuchFileException;
 import java.util.Objects;
 import java.util.Vector;
 
-/*
-Класс, описывающий и реализующий все команды в программе
+/**
+ * Класс, описывающий и реализующий все команды в программе
  */
 public abstract class Command {
     private static RouteCollection routeCollection;
@@ -32,24 +32,24 @@ public abstract class Command {
     public Command() {
     }
 
-    /*
-    Геттер описания команды
-    */
+    /**
+     * Геттер описания команды
+     */
     public abstract String getDescription();
 
-    /*
-    Метод, реализующий выполнение команды
-    @param String[] args
+    /**
+     * Метод, реализующий выполнение команды
+     * @param args
      */
     public abstract void execute(String[] args) throws Exception;
 
-    /*
-    Геттер названия команды
+    /**
+     * Геттер названия команды
      */
     public abstract String getName();
 
-    /*
-    Служебная комманда реализующая первичную настройку всех команд для работы с коллекцией
+    /**
+     * Служебная комманда реализующая первичную настройку всех команд для работы с коллекцией
      */
     public static class UtilCommandForSetUp extends Command {
         private String name;
@@ -60,9 +60,9 @@ public abstract class Command {
             name = "setuputility";
         }
 
-        /*
-        Метод настраивает команды под работу с коллекцией
-        @return Vector<Command>
+        /**
+         * Метод настраивает команды под работу с коллекцией
+         * @return Vector<Command>
          */
         public static Vector<Command> formCommandList() {
             Help help = new Help();
@@ -106,8 +106,8 @@ public abstract class Command {
             return null;
         }
 
-        /*
-        За выполнение этой комманды отвечает
+        /**
+         * За выполнение этой комманды отвечает
          */
         @Override
         public void execute(String[] args) throws Exception {
@@ -132,8 +132,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда выводит список всех остальных команд с описанием
+    /**
+     * Комманда выводит список всех остальных команд с описанием
      */
     public static class Help extends Command {
         private String name = "help";
@@ -177,8 +177,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда выводит информацию о коллекции
+    /**
+     * Комманда выводит информацию о коллекции
      */
     public static class Info extends Command {
         private String name = "info";
@@ -218,8 +218,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда выводит все элементы коллекции
+    /**
+     * Комманда выводит все элементы коллекции
      */
     public static class Show extends Command {
         private String name = "show";
@@ -259,8 +259,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда добавляет элемень в коллекцию
+    /**
+     * Комманда добавляет элемень в коллекцию
      */
     public static class Add extends Command {
         private String name = "add";
@@ -307,8 +307,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда обновляет объект в коллекции по его id
+    /**
+     * Комманда обновляет объект в коллекции по его id
      */
     public static class Update extends Command {
         private String name = "update";
@@ -354,8 +354,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда удаляет объект из коллекции по его id
+    /**
+     * Комманда удаляет объект из коллекции по его id
      */
     public static class RemoveById extends Command {
         private String name = "remove_by_id";
@@ -371,7 +371,11 @@ public abstract class Command {
 
         @Override
         public void execute(String[] args) throws Exception {
+            final int lengthOfArgs = 1;
             try {
+                if (args.length != lengthOfArgs) {
+                    throw new WrongInputException();
+                }
                 int id = Integer.parseInt(args[0]);
                 routeCollection.getRoadCollection().remove(routeCollection.idSearch(id));
                 System.out.println("Объект удален!");
@@ -398,8 +402,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда полностью очищает коллекцию
+    /**
+     * Комманда полностью очищает коллекцию
      */
     public static class Clear extends Command {
         private String name = "clear";
@@ -436,8 +440,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Служебная команда для восстановления коллекции из сохраненного файла, если такой имеется
+    /**
+     * Служебная команда для восстановления коллекции из сохраненного файла, если такой имеется
      */
     public static class LoadFromFile extends Command {
         private RouteCollection routeCollection;
@@ -449,18 +453,18 @@ public abstract class Command {
             return null;
         }
 
-        /*
-        метод устанавливает коллекцию для корректной работы команды
-        @param RouteCollection
-        */
+        /**
+         * Метод устанавливает коллекцию для корректной работы команды
+         * @param routeCollection
+         */
         public void setRouteCollection(RouteCollection routeCollection) {
             this.routeCollection = routeCollection;
         }
 
-        /*
-        Метод реализует добавление восстановленных элементов в коллекцию
-        @param File
-        */
+        /**
+         * Метод реализует добавление восстановленных элементов в коллекцию
+         * @param foundFileToLoad
+         */
         private void add(File foundFileToLoad) throws Exception {
             BufferedInputStream read = new BufferedInputStream(new FileInputStream(foundFileToLoad));
             BufferedReader reader = new BufferedReader(new InputStreamReader(read));
@@ -524,8 +528,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда сохраняет коллекцию в файл
+    /**
+     * Комманда сохраняет коллекцию в файл
      */
     public static class Save extends Command {
         private String name = "save";
@@ -579,8 +583,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда выполняет скрипт из указанного файла
+    /**
+     * Комманда выполняет скрипт из указанного файла
      */
     public static class ExecuteScript extends Command {
         private String name = "execute_script";
@@ -646,8 +650,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда добавляет элемент в коллекцию, если он минимальный по значению
+    /**
+     * Комманда добавляет элемент в коллекцию, если он минимальный по значению
      */
     public static class AddIfMin extends Command {
         private String name = "add_if_min";
@@ -696,8 +700,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда удаляет все большие по значению элементы коллекции
+    /**
+     * Комманда удаляет все большие по значению элементы коллекции
      */
     public static class RemoveGreater extends Command {
         private String name = "remove_greater";
@@ -750,8 +754,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда фильтр, выводит элемент с максимальным значением по имени
+    /**
+     * Комманда фильтр, выводит элемент с максимальным значением по имени
      */
     public static class MaxByName extends Command {
         private String name = "max_by_name";
@@ -789,8 +793,8 @@ public abstract class Command {
         }
     }
 
-    /*
-     Комманда фильтр, выводит все элементы, дистанция которых равна введенной
+    /**
+     * Комманда фильтр, выводит все элементы, дистанция которых равна введенной
      */
     public static class FilterByDistance extends Command {
         private String name = "filter_by_distance";
@@ -833,8 +837,8 @@ public abstract class Command {
         }
     }
 
-    /*
-    Комманда выводит все элементы, дистанция которых меньше введенной
+    /**
+     * Комманда выводит все элементы, дистанция которых меньше введенной
      */
     public static class FilterLessThenDistance extends Command {
         private String name = "filter_less_then_distance";

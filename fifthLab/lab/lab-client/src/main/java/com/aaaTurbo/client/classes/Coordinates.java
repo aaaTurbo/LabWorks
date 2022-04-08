@@ -2,9 +2,9 @@ package com.aaaTurbo.client.classes;
 
 import java.util.Objects;
 
-/*
-Класс координат, который используются для сосздания route
-*/
+/**
+ * Класс координат, который используются для сосздания route
+ */
 public class Coordinates {
     private Long x; //Поле не может быть null
     private int y;

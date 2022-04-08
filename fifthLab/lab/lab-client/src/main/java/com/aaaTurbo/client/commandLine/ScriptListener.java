@@ -13,9 +13,9 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Vector;
 
-/*
-Класс, реализающий чтение и выполнение скриптов
-*/
+/**
+ * Класс, реализающий чтение и выполнение скриптов
+ */
 public class ScriptListener {
     private static Vector<String> executedScripts = new Vector<>();
     private File file;
@@ -28,19 +28,19 @@ public class ScriptListener {
         commandSelecter = new CommandSelecter(utilCommandForSetUp);
     }
 
-    /*
-    Метод, устанавливающий файл
-    @param File
+    /**
+     * Метод, устанавливающий файл
+     * @param file
     */
     public void setFile(File file) {
         this.file = file;
     }
 
-    /*
-    Метод, выделяющий имя из параметров командной строки
-    @param Str
-    @return String
-    */
+    /**
+     * Метод, выделяющий имя из параметров командной строки
+     * @param str
+     * @return String
+     */
     private String splitName(String str) {
         String[] s = str.split(" ");
         String splitedName = s[0];
@@ -48,10 +48,10 @@ public class ScriptListener {
         return splitedName;
     }
 
-    /*
-    Метод, выделяющий аргументы из параметров командной строки
-    @param Str[]
-    @return String
+    /**
+     * Метод, выделяющий аргументы из параметров командной строки
+     * @param str
+     * @return String
     */
     private String[] splitArgs(String str) {
         String[] splited = str.split(" ");
@@ -66,9 +66,9 @@ public class ScriptListener {
         return args;
     }
 
-    /*
-    Метод, реализующий парсинг и выполнения скрипт
-    */
+    /**
+     * Метод, реализующий парсинг и выполнения скрипт
+     */
     public void listenScript() throws Exception {
         BufferedInputStream read = new BufferedInputStream(new FileInputStream(file));
         BufferedReader reader = new BufferedReader(new InputStreamReader(read));

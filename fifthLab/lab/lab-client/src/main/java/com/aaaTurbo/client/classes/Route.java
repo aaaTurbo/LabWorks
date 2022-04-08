@@ -3,9 +3,9 @@ package com.aaaTurbo.client.classes;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-/*
-Класс объекы которого, хранятся в коллекции
-*/
+/**
+ *Класс объекы которого, хранятся в коллекции
+ */
 public class Route implements Comparable<Route> {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -65,10 +65,10 @@ public class Route implements Comparable<Route> {
         return id;
     }
 
-    /*
-    Метод, который генерирует данные для сохранения элементов коллекции в файл
-    @return String[]
-    */
+    /**
+     *Метод, который генерирует данные для сохранения элементов коллекции в файл
+     *@return String[]
+     */
     public String[] generateToSaveInCSV() {
         String[] csv = (id + "," + name + "," + coordinates.getX() + "," + coordinates.getY() + "," + creationDate.toString() + "," + from.getX() + "," + from.getY() + "," + from.getName() + "," + to.getX() + "," + to.getY() + "," + to.getName() + "," + distance).split(",");
         return csv;

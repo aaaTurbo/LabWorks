@@ -3,6 +3,9 @@ package com.aaaTurbo.client.classes;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
+/**
+ * Класс реализующий генерацию
+ */
 public class RouteGenerator {
     private String generatorName = "Генератор дорог";
 

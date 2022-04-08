@@ -5,9 +5,9 @@ import com.aaaTurbo.client.commands.Command;
 import java.util.Objects;
 import java.util.Vector;
 
-/*
-Класс, реализующий выборку команды
-*/
+/**
+ * Класс, реализующий выборку команды
+ */
 public class CommandSelecter {
     private Command.UtilCommandForSetUp utilCommandForSetUp;
     private Vector<Command> commandList;
@@ -17,11 +17,11 @@ public class CommandSelecter {
         commandList = utilCommandForSetUp.formCommandList();
     }
 
-    /*
-    Метод, выбирающий команду
-    @param String
-    @return Command
-    */
+    /**
+     * Метод, выбирающий команду
+     * @param name
+     * @return Command
+     */
     public Command selectCommand(String name) {
         for (Command c : commandList) {
             if (Objects.equals(c.getName(), name)) {

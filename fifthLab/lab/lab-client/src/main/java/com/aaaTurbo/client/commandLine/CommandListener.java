@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * Класс реализующий чтение команд в реалтном времени
+ */
 public class CommandListener {
     private boolean inWork = true;
     private int historyCounter = 0;
@@ -32,6 +35,11 @@ public class CommandListener {
         System.out.println("--- Программа завершена ---");
     }
 
+    /**
+     * Реализация сохранения истории комманд
+     * @param str
+     * @return String[]
+     */
     private String[] historyAttendant(String str) {
         final int count = 12;
         final int countS = 11;
@@ -49,12 +57,22 @@ public class CommandListener {
         return historyAttendant;
     }
 
+    /**
+     * Отделение имени от всего ввода
+     * @param str
+     * @return String
+     */
     private String splitName(String str) {
         String[] s = str.split(" ");
         String splitedName = s[0];
         return splitedName;
     }
 
+    /**
+     * Отделение аргументов от всего ввода
+     * @param str
+     * @return String[]
+     */
     private String[] splitArgs(String str) {
         String[] splited = str.split(" ");
         String[] args = new String[splited.length - 1];
@@ -68,6 +86,10 @@ public class CommandListener {
         return args;
     }
 
+    /**
+     * Реализация чтения комманд в реальном времени
+     * @throws Exception
+     */
     public void startListen() throws Exception {
         final int length = 12;
         String[] history = new String[length];
