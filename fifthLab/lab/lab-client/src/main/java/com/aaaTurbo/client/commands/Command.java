@@ -32,6 +32,10 @@ public abstract class Command {
     public Command() {
     }
 
+    public Command(RouteCollection routeCollection) {
+        this.routeCollection = routeCollection;
+    }
+
     /**
      * Геттер описания команды
      */
@@ -79,6 +83,8 @@ public abstract class Command {
             AddIfMin addIfMin = new AddIfMin();
             ExecuteScript executeScript = new ExecuteScript();
             Save save = new Save();
+            LoadFromFile loadFromFile = new LoadFromFile();
+//            loadFromFile.setRouteCollection();
             Vector<Command> commandList = new Vector<>();
             commandList.add(help);
             commandList.add(info);
@@ -94,6 +100,7 @@ public abstract class Command {
             commandList.add(removeGreater);
             commandList.add(executeScript);
             commandList.add(save);
+            commandList.add(loadFromFile);
             return commandList;
         }
 
@@ -444,21 +451,20 @@ public abstract class Command {
      * Служебная команда для восстановления коллекции из сохраненного файла, если такой имеется
      */
     public static class LoadFromFile extends Command {
-        private RouteCollection routeCollection;
-        private String name = "загркзка из файла";
+        private String name = "load";
+        private String description = "{file name} : загрузить коллекцию из файла";
+        private RouteGenerator r = new RouteGenerator();
 
-        @Override
-
-        public String getDescription() {
-            return null;
+        public LoadFromFile() {
         }
 
-        /**
-         * Метод устанавливает коллекцию для корректной работы команды
-         * @param routeCollection
-         */
-        public void setRouteCollection(RouteCollection routeCollection) {
-            this.routeCollection = routeCollection;
+        public LoadFromFile(RouteCollection r) {
+            routeCollection = r;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
         }
 
         /**
@@ -470,13 +476,13 @@ public abstract class Command {
             BufferedReader reader = new BufferedReader(new InputStreamReader(read));
             CSVReader csvReader = new CSVReader(reader, ',', '"', 0);
             String[] nextLine;
-            RouteGenerator r = new RouteGenerator();
             while ((nextLine = csvReader.readNext()) != null) {
                 try {
                     Route toAdd = r.generateRouteWithIdAndTime(nextLine);
                     routeCollection.getRoadCollection().add(toAdd);
                 } catch (Exception e) {
                     System.out.println("===Файл поврежден и записан не полностью или вовсе не записан!===");
+                    System.out.println(e.getMessage());
                 }
             }
             System.out.println("---Коллекция восстановлена---");
@@ -486,28 +492,37 @@ public abstract class Command {
         public void execute(String[] args) throws Exception {
             Vector<File> foundFiles = new Vector<>();
             File foundFileToLoad;
-            File dir = new File("/Users/antonsemenov/IdeaProjects/lab/lab-client/src/main/java/com/aaaTurbo/client/files");
-            for (File f : dir.listFiles()) {
-                if (Objects.equals("colleсtion.csv", f.getName())) {
-                    foundFiles.add(f);
-                }
+            File dir = new File(System.getProperty("user.dir")+"/lab-client/src/main/java/com/aaaTurbo/client/files");
+            try {
+                    if (args.length > 1) {
+                        throw new WrongInputException();
+                    }
+                    String fileName = args[0];
+                    for (File f : dir.listFiles()) {
+                        if (Objects.equals(fileName, f.getName())) {
+                            foundFiles.add(f);
+                        }
+                    }
+                    if (foundFiles.size() > 1) {
+                        System.out.println("Введите номер коллекции, которую хотите восстановить(нумерация от 1): ");
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                        int read = Integer.parseInt(reader.readLine());
+                        foundFileToLoad = foundFiles.get(read - 1);
+                        add(foundFileToLoad);
+                    }
+                    if (foundFiles.size() == 1) {
+                        foundFileToLoad = foundFiles.get(0);
+                        add(foundFileToLoad);
+                    }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            if (foundFiles.size() > 1) {
-                System.out.println("Введите номер коллекции, которую хотите восстановить(нумерация от 1): ");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int read = Integer.parseInt(reader.readLine());
-                foundFileToLoad = foundFiles.get(read - 1);
-                add(foundFileToLoad);
-            }
-            if (foundFiles.size() == 1) {
-                foundFileToLoad = foundFiles.get(0);
-                add(foundFileToLoad);
-            }
+            foundFiles.clear();
         }
 
         @Override
         public String getName() {
-            return null;
+            return name;
         }
 
         @Override
@@ -519,7 +534,7 @@ public abstract class Command {
                 return false;
             }
             LoadFromFile that = (LoadFromFile) o;
-            return routeCollection.equals(that.routeCollection) && name.equals(that.name);
+            return routeCollection.equals(name.equals(that.name));
         }
 
         @Override
@@ -546,7 +561,7 @@ public abstract class Command {
             }
             Route toSave = null;
             String csv = "colleсtion.csv";
-            File f = new File("/Users/antonsemenov/IdeaProjects/lab/lab-client/src/main/java/com/aaaTurbo/client/files/" + csv);
+            File f = new File(System.getProperty("user.dir")+"/lab-client/src/main/java/com/aaaTurbo/client/files" + csv);
             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
             CSVWriter csvWriter = new CSVWriter(writer);
