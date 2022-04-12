@@ -11,6 +11,7 @@ import com.aaaTurbo.client.myExceptions.NoRouteInCollectionException;
 import com.aaaTurbo.client.myExceptions.WrongInputException;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -492,17 +493,17 @@ public abstract class Command {
         public void execute(String[] args) throws Exception {
             Vector<File> foundFiles = new Vector<>();
             File foundFileToLoad;
-            File dir = new File(System.getProperty("user.dir")+"/lab-client/src/main/java/com/aaaTurbo/client/files");
+            File dir = new File(new File(System.getProperty("user.dir")+args[0]).getParent());
             try {
-                    if (args.length > 1) {
-                        throw new WrongInputException();
+                if (args.length > 1) {
+                    throw new WrongInputException();
+                }
+                String fileName = (args[0].split("/"))[(args[0].split("/")).length - 1];
+                for (File f : dir.listFiles()) {
+                    if (Objects.equals(fileName, f.getName())) {
+                        foundFiles.add(f);
                     }
-                    String fileName = args[0];
-                    for (File f : dir.listFiles()) {
-                        if (Objects.equals(fileName, f.getName())) {
-                            foundFiles.add(f);
-                        }
-                    }
+                }
                     if (foundFiles.size() > 1) {
                         System.out.println("Введите номер коллекции, которую хотите восстановить(нумерация от 1): ");
                         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -556,12 +557,12 @@ public abstract class Command {
 
         @Override
         public void execute(String[] args) throws Exception {
-            if (args.length != 0) {
+            if (args.length > 1) {
                 throw new WrongInputException();
             }
             Route toSave = null;
-            String csv = "colleсtion.csv";
-            File f = new File(System.getProperty("user.dir")+"/lab-client/src/main/java/com/aaaTurbo/client/files" + csv);
+            String csv = args[0];
+            File f = new File(System.getProperty("user.dir") + csv);
             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
             CSVWriter csvWriter = new CSVWriter(writer);
@@ -572,6 +573,13 @@ public abstract class Command {
                 }
             }
             csvWriter.close();
+            File saveToBufferDellOld = new File(System.getProperty("user.dir") + "/lab-client/src/main/java/com/aaaTurbo/client/commands/lastSavedCollectionBuffer");
+            saveToBufferDellOld.delete();
+            File saveToBuffer = new File(System.getProperty("user.dir") + "/lab-client/src/main/java/com/aaaTurbo/client/commands/lastSavedCollectionBuffer");
+            FileOutputStream bufferOutput = new FileOutputStream(saveToBuffer);
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(bufferOutput));
+            bufferedWriter.write(csv);
+            bufferedWriter.close();
             System.out.println("---Ваша коллекция успешно сохранена в файл!---");
         }
 
@@ -616,9 +624,10 @@ public abstract class Command {
             if (args.length != 1) {
                 throw new WrongInputException();
             }
-            File dir = new File("/Users/antonsemenov/IdeaProjects/lab/lab-client/src/main/java/com/aaaTurbo/client/files");
+            File dir = new File(new File(System.getProperty("user.dir")+args[0]).getParent());
+            String fileName = (args[0].split("/"))[(args[0].split("/")).length - 1];
             for (File f : dir.listFiles()) {
-                if (Objects.equals(args[0], f.getName())) {
+                if (Objects.equals(fileName, f.getName())) {
                     foundFiles.add(f);
                 }
             }
