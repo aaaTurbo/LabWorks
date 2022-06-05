@@ -85,7 +85,6 @@ public final class Client {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(System.getProperty("user.dir"));
         DatagramSocket client = new DatagramSocket(CLIENTPORT, InetAddress.getLocalHost());
         clientSetUP(client);
     }

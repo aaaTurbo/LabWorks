@@ -89,11 +89,13 @@ public class RequestListener implements Runnable {
             try {
                 LOGGER.info("===Waiting for connection from client and command!===");
                 waitCommand();
-                LOGGER.info("===Client connected and command accepted!===");
                 if (savedCommand != null && !Objects.equals(savedCommand.getName(), "execute_script")) {
                     String[] args = savedCommand.getArgs();
                     for (Command c : commands) {
                         if (Objects.equals(savedCommand.getName(), c.getName())) {
+                            if (c.getClass() != Command.Save.class) {
+                                LOGGER.info("===Client connected and command accepted!===");
+                            }
                             c.execute(args);
                             LOGGER.info("===Command executed {" + c.getName() + "} and answer sent!===");
                         }
