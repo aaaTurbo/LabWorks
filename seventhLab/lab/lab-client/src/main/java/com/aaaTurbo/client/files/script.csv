@@ -1,0 +1,8 @@
+"info",
+"show",
+"add perviy 34 34 34 34 test 34 34 test 34",
+"add vtoroy 323 34 34 34 test 34 34 test 34",
+"show",
+"execute_script /lab-client/src/main/java/com/aaaTurbo/client/files/scriptToCheckDoubleScript.csv",
+"execute_script /lab-client/src/main/java/com/aaaTurbo/client/files/scriptToCheckDoubleScript.csv",
+"execute_script /lab-client/src/main/java/com/aaaTurbo/client/files/scriptToCheckExecMainScriptAgain.csv",
