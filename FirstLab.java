@@ -1,3 +1,4 @@
+//Вариант 41522
 public class Main {
 
     public static void randFillingArr(float[] arr, int min, int max){
