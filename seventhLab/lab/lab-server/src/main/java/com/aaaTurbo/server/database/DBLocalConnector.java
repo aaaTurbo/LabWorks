@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBLocalConnector {
-    private final String dbUrl = "jdbc:postgresql://127.0.0.1:5432/studs";
-    private final String user = "s338924";
-    private final String pass = "sux281";
+    private final String dbUrl = "***";
+    private final String user = "***";
+    private final String pass = "***";
 
     public DBLocalConnector() {
         try {
